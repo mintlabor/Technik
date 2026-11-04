@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MINT-Labor – Technik</title>
+<style>
+  :root { --blau:#1f4e79; --hell:#eef4fa; --akzent:#f2a900; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui, -apple-system, "Segoe UI", sans-serif; background:var(--hell); color:#1d2733; }
+  header { background:var(--blau); color:#fff; padding:2.5rem 1.5rem; text-align:center; }
+  header h1 { margin:0; font-size:2.2rem; letter-spacing:.5px; }
+  header p { margin:.5rem 0 0; opacity:.85; }
+  main { max-width:900px; margin:2rem auto; padding:0 1.25rem; }
+  .karten { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1rem; }
+  .karte { background:#fff; border-radius:12px; padding:1.25rem; box-shadow:0 2px 8px rgba(0,0,0,.06); border-top:4px solid var(--akzent); }
+  .karte h2 { margin:0 0 .5rem; font-size:1.15rem; color:var(--blau); }
+  .karte p { margin:0; color:#4a5563; }
+  .bald { display:inline-block; margin-top:.75rem; font-size:.8rem; background:var(--hell); color:var(--blau); padding:.2rem .6rem; border-radius:20px; }
+  footer { text-align:center; color:#6b7684; font-size:.85rem; padding:2rem 1rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>MINT-Labor</h1>
+  <p>Übungen und interaktive Lernseiten für den Technikunterricht</p>
+</header>
+<main>
+  <div class="karten">
+    <div class="karte">
+      <h2>⚡ Elektrotechnik</h2>
+      <p>Stromkreise, Ohmsches Gesetz und Schaltungen.</p>
+      <span class="bald">kommt bald</span>
+    </div>
+    <div class="karte">
+      <h2>⚙️ Mechanik</h2>
+      <p>Zahnräder, Hebel und Übersetzungen.</p>
+      <span class="bald">kommt bald</span>
+    </div>
+    <div class="karte">
+      <h2>📐 Technisches Zeichnen</h2>
+      <p>Ansichten, Maße und Normen.</p>
+      <span class="bald">kommt bald</span>
+    </div>
+  </div>
+</main>
+<footer>MINT-Labor · Technikunterricht</footer>
+</body>
+</html>
