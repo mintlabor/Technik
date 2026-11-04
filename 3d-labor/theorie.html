@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theorie – 3D-Labor</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .drucker-wrap { display: grid; grid-template-columns: minmax(260px, 1.2fr) 1fr; gap: 1.2rem; align-items: start; }
+  @media (max-width: 700px) { .drucker-wrap { grid-template-columns: 1fr; } }
+  svg .teil { cursor: pointer; transition: opacity .2s; }
+  svg .teil:hover { opacity: .75; }
+  svg .teil.aktiv rect, svg .teil.aktiv circle, svg .teil.aktiv path, svg .teil.aktiv polygon { stroke: var(--akzent); stroke-width: 4; }
+  #teil-info { background: var(--hell); border-radius: 10px; padding: 1rem; min-height: 160px; }
+  .regler { display: grid; grid-template-columns: 1fr; gap: .9rem; }
+  .regler output { font-weight: 700; color: var(--blau); }
+  .sim-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; align-items: start; }
+  @media (max-width: 700px) { .sim-wrap { grid-template-columns: 1fr; } }
+  .werte { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin-top: 1rem; }
+  .wert { background: var(--hell); border-radius: 8px; padding: .6rem .8rem; }
+  .wert span { display: block; font-size: .8rem; color: var(--grau); }
+  .wert b { font-size: 1.2rem; color: var(--blau); }
+  canvas { width: 100%; max-width: 320px; border-radius: 10px; background: #f7f9fc; border: 1px solid var(--blau-hell); display: block; margin: 0 auto; }
+</style>
+</head>
+<body>
+<header>
+  <h1>📘 Theorie</h1>
+  <p>Grundlagen des 3D-Drucks</p>
+</header>
+<nav class="top">
+  <ul>
+    <li><a href="index.html">← Übersicht</a></li>
+    <li><a href="#was">Was ist 3D-Druck?</a></li>
+    <li><a href="#aufbau">Aufbau</a></li>
+    <li><a href="#ablauf">Ablauf</a></li>
+    <li><a href="#slicer">Slicer</a></li>
+    <li><a href="#material">Material</a></li>
+    <li><a href="#fehler">Fehler</a></li>
+    <li><a href="#sicherheit">Sicherheit</a></li>
+    <li><a href="#quiz">Quiz</a></li>
+  </ul>
+</nav>
+<main>
+
+<!-- 1 -->
+<section id="was">
+  <h2>1. Was ist 3D-Druck?</h2>
+  <p>Beim 3D-Druck wird ein Bauteil <strong>Schicht für Schicht</strong> aufgebaut. Man spricht deshalb von <strong>additiver Fertigung</strong> (lat. <em>addere</em> = hinzufügen). Im Gegensatz dazu wird bei der <strong>subtraktiven Fertigung</strong> (Fräsen, Bohren, Sägen) Material von einem Rohteil entfernt.</p>
+  <div class="tabelle-scroll">
+  <table>
+    <tr><th></th><th>Additiv (3D-Druck)</th><th>Subtraktiv (z. B. Fräsen)</th></tr>
+    <tr><td>Prinzip</td><td>Material wird hinzugefügt</td><td>Material wird abgetragen</td></tr>
+    <tr><td>Abfall</td><td>sehr wenig</td><td>Späne, Verschnitt</td></tr>
+    <tr><td>Formen</td><td>auch komplexe Hohlformen möglich</td><td>durch Werkzeug begrenzt</td></tr>
+    <tr><td>Geschwindigkeit</td><td>langsam, gut für Einzelteile</td><td>schnell, gut für Serien</td></tr>
+  </table>
+  </div>
+  <h3>Das FDM-Verfahren</h3>
+  <p>In der Schule wird fast immer das <strong>FDM-Verfahren</strong> genutzt (<em>Fused Deposition Modeling</em>, auf Deutsch etwa „Schmelzschichtung“). Ein Kunststoffdraht, das <strong>Filament</strong>, wird in einer heißen Düse geschmolzen und als feiner Strang auf eine Druckplatte gelegt. Ist eine Schicht fertig, bewegt sich die Düse ein kleines Stück nach oben (oder die Platte nach unten), und die nächste Schicht folgt.</p>
+  <div class="merke"><strong>Merke</strong>3D-Druck ist ein additives Fertigungsverfahren. Beim FDM-Verfahren wird Kunststoff geschmolzen und Schicht für Schicht aufgetragen.</div>
+  <p>Weitere Verfahren sind zum Beispiel der <strong>Harzdruck</strong> (SLA: flüssiges Kunstharz wird mit UV-Licht ausgehärtet) und das <strong>Lasersintern</strong> (SLS: Pulver wird mit einem Laser verschmolzen, vor allem in der Industrie).</p>
+</section>
+
+<!-- 2 -->
+<section id="aufbau">
+  <h2>2. Aufbau eines FDM-Druckers</h2>
+  <p>Tippe auf ein Bauteil in der Grafik, um mehr darüber zu erfahren.</p>
+  <div class="drucker-wrap">
+    <svg viewBox="0 0 360 340" role="img" aria-label="Schematischer Aufbau eines 3D-Druckers">
+      <!-- Rahmen -->
+      <g class="teil" data-teil="rahmen">
+        <rect x="40" y="60" width="14" height="240" fill="#90a4ae" stroke="#455a64" stroke-width="2"/>
+        <rect x="306" y="60" width="14" height="240" fill="#90a4ae" stroke="#455a64" stroke-width="2"/>
+        <rect x="40" y="52" width="280" height="12" fill="#90a4ae" stroke="#455a64" stroke-width="2"/>
+        <rect x="20" y="296" width="320" height="18" fill="#78909c" stroke="#455a64" stroke-width="2"/>
+      </g>
+      <!-- Spule -->
+      <g class="teil" data-teil="filament">
+        <circle cx="180" cy="28" r="22" fill="#66bb6a" stroke="#2e7d32" stroke-width="2"/>
+        <circle cx="180" cy="28" r="7" fill="#fff" stroke="#2e7d32" stroke-width="2"/>
+        <path d="M200 36 Q 250 70 238 128" fill="none" stroke="#2e7d32" stroke-width="3"/>
+      </g>
+      <!-- X-Achse -->
+      <g class="teil" data-teil="achsen">
+        <rect x="54" y="120" width="252" height="8" fill="#b0bec5" stroke="#455a64" stroke-width="2"/>
+      </g>
+      <!-- Extruder -->
+      <g class="teil" data-teil="extruder">
+        <rect x="216" y="128" width="44" height="28" fill="#ffca28" stroke="#b28704" stroke-width="2"/>
+      </g>
+      <!-- Hotend -->
+      <g class="teil" data-teil="hotend">
+        <rect x="226" y="156" width="24" height="26" fill="#ef5350" stroke="#b71c1c" stroke-width="2"/>
+        <polygon points="232,182 244,182 238,194" fill="#ef5350" stroke="#b71c1c" stroke-width="2"/>
+      </g>
+      <!-- Bauteil -->
+      <g class="teil" data-teil="bauteil">
+        <rect x="218" y="236" width="40" height="30" fill="#81c784" stroke="#2e7d32" stroke-width="2"/>
+        <line x1="218" y1="246" x2="258" y2="246" stroke="#2e7d32"/>
+        <line x1="218" y1="256" x2="258" y2="256" stroke="#2e7d32"/>
+      </g>
+      <!-- Druckbett -->
+      <g class="teil" data-teil="bett">
+        <rect x="80" y="266" width="200" height="12" fill="#42a5f5" stroke="#1565c0" stroke-width="2"/>
+      </g>
+      <!-- Motor -->
+      <g class="teil" data-teil="motoren">
+        <rect x="28" y="230" width="26" height="26" fill="#424242" stroke="#000" stroke-width="2"/>
+        <rect x="306" y="230" width="26" height="26" fill="#424242" stroke="#000" stroke-width="2"/>
+      </g>
+      <!-- Display -->
+      <g class="teil" data-teil="steuerung">
+        <rect x="140" y="300" width="80" height="12" rx="2" fill="#263238" stroke="#000" stroke-width="2"/>
+      </g>
+    </svg>
+    <div id="teil-info"><strong>Tippe auf ein Bauteil …</strong><br>Die Informationen erscheinen dann hier.</div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section id="ablauf">
+  <h2>3. Vom Modell zum Druck</h2>
+  <p>Jeder 3D-Druck durchläuft dieselben Schritte. Klicke dich durch:</p>
+  <div class="schritte" id="schritt-knoepfe"></div>
+  <div class="schritt-inhalt" id="schritt-inhalt"></div>
+  <div class="merke"><strong>Merke</strong>Idee → CAD-Modell → STL-Datei → Slicer → G-Code → Druck → Nachbearbeitung</div>
+</section>
+
+<!-- 4 -->
+<section id="slicer">
+  <h2>4. Slicer-Einstellungen</h2>
+  <p>Im Slicer legst du fest, <em>wie</em> dein Modell gedruckt wird. Die drei wichtigsten Einstellungen sind:</p>
+  <ul>
+    <li><strong>Schichthöhe:</strong> Wie dick ist eine Schicht? Üblich sind 0,1 bis 0,3 mm. Dünne Schichten sehen glatter aus, dauern aber länger.</li>
+    <li><strong>Füllung (Infill):</strong> Das Innere wird nicht massiv gedruckt, sondern mit einem Gittermuster gefüllt. 15–20 % reichen für die meisten Teile. Mehr Füllung bedeutet mehr Stabilität, aber auch mehr Material und Zeit.</li>
+    <li><strong>Stützstrukturen (Support):</strong> Überhänge von mehr als etwa 45° können nicht „in die Luft“ gedruckt werden. Der Slicer baut dann Stützen, die man nach dem Druck entfernt.</li>
+  </ul>
+  <h3>🔬 Simulator: Würfel drucken</h3>
+  <p>Verändere die Einstellungen und beobachte, wie sich Schichtanzahl, Material und Druckzeit ändern. Die Grafik zeigt einen Schnitt durch den Würfel von oben.</p>
+  <div class="sim-wrap">
+    <div class="regler">
+      <div><label for="kante">Kantenlänge: <output id="kante-out">2,0</output> cm</label><input type="range" id="kante" min="1" max="8" step="0.5" value="2"></div>
+      <div><label for="schicht">Schichthöhe: <output id="schicht-out">0,20</output> mm</label><input type="range" id="schicht" min="0.1" max="0.3" step="0.05" value="0.2"></div>
+      <div><label for="infill">Füllung: <output id="infill-out">20</output> %</label><input type="range" id="infill" min="0" max="100" step="5" value="20"></div>
+      <div class="werte">
+        <div class="wert"><span>Anzahl Schichten</span><b id="w-schichten">–</b></div>
+        <div class="wert"><span>Materialvolumen</span><b id="w-volumen">–</b></div>
+        <div class="wert"><span>Masse (PLA)</span><b id="w-masse">–</b></div>
+        <div class="wert"><span>Druckzeit (ca.)</span><b id="w-zeit">–</b></div>
+      </div>
+      <p style="font-size:.82rem;color:var(--grau);margin:.3rem 0 0">Näherungswerte: Wand- und Deckschichten je 1,2 mm, Dichte PLA 1,24 g/cm³, Strangbreite 0,4 mm, Geschwindigkeit 50 mm/s.</p>
+    </div>
+    <canvas id="schnitt" width="320" height="320"></canvas>
+  </div>
+</section>
+
+<!-- 5 -->
+<section id="material">
+  <h2>5. Materialien</h2>
+  <p>Filament gibt es in vielen Kunststoffen. In der Schule wird meist <strong>PLA</strong> verwendet, weil es einfach zu drucken ist und kaum Gerüche entwickelt.</p>
+  <div class="tabelle-scroll">
+  <table>
+    <tr><th>Material</th><th>Düse</th><th>Druckbett</th><th>Eigenschaften</th><th>Typische Anwendung</th></tr>
+    <tr><td><strong>PLA</strong></td><td>190–220 °C</td><td>50–60 °C</td><td>leicht zu drucken, steif, wird ab ca. 55 °C weich, aus Maisstärke o. Ä. hergestellt</td><td>Modelle, Prototypen, Schulprojekte</td></tr>
+    <tr><td><strong>PETG</strong></td><td>230–250 °C</td><td>70–85 °C</td><td>zäher und hitzebeständiger als PLA, neigt zu Fäden</td><td>Halterungen, Gehäuse, Teile für draußen</td></tr>
+    <tr><td><strong>TPU</strong></td><td>210–230 °C</td><td>40–60 °C</td><td>gummiartig und flexibel, langsam zu drucken</td><td>Dichtungen, Handyhüllen, Puffer</td></tr>
+    <tr><td><strong>ABS</strong></td><td>230–260 °C</td><td>90–110 °C</td><td>robust und hitzebeständig, verzieht sich leicht, Dämpfe → nur mit Gehäuse und Lüftung</td><td>technische Teile (eher nicht im Klassenraum)</td></tr>
+  </table>
+  </div>
+  <p style="font-size:.85rem;color:var(--grau)">Die Temperaturen sind Richtwerte. Maßgeblich sind immer die Angaben auf der Filamentrolle.</p>
+  <div class="merke"><strong>Merke</strong>Filament hat meist einen Durchmesser von 1,75 mm. Ein Meter PLA-Filament wiegt etwa 3 g.</div>
+</section>
+
+<!-- 6 -->
+<section id="fehler">
+  <h2>6. Typische Druckfehler</h2>
+  <p>Auch erfahrene Nutzer haben Fehldrucke. Wichtig ist, die Ursache zu erkennen. Klicke auf einen Fehler:</p>
+  <details><summary>🔻 Bauteil löst sich vom Druckbett</summary><p><strong>Ursache:</strong> Erste Schicht haftet nicht – Bett nicht eben (nicht „gelevelt“), Düse zu weit entfernt, Bett schmutzig oder zu kalt.<br><strong>Lösung:</strong> Bett leveln, Druckplatte mit Spülmittel/Isopropanol reinigen, Betttemperatur prüfen, ggf. „Brim“ (Rand) im Slicer aktivieren.</p></details>
+  <details><summary>↩️ Warping – Ecken biegen sich hoch</summary><p><strong>Ursache:</strong> Der Kunststoff schrumpft beim Abkühlen. Ecken kühlen schneller und ziehen sich nach oben.<br><strong>Lösung:</strong> Bett wärmer, Zugluft vermeiden, Brim verwenden, Material wie PLA statt ABS wählen.</p></details>
+  <details><summary>🕸️ Stringing – feine Fäden zwischen Teilen</summary><p><strong>Ursache:</strong> Beim Verfahren tropft geschmolzenes Material aus der Düse.<br><strong>Lösung:</strong> Retract (Rückzug) im Slicer erhöhen, Düsentemperatur etwas senken, Filament trocken lagern.</p></details>
+  <details><summary>🍝 „Spaghetti“ – Druck wird zu Fadensalat</summary><p><strong>Ursache:</strong> Das Teil hat sich gelöst oder ein Überhang wurde ohne Stütze gedruckt.<br><strong>Lösung:</strong> Druck sofort stoppen, Haftung verbessern, Stützstrukturen aktivieren oder Modell anders hinlegen.</p></details>
+  <details><summary>🕳️ Unterextrusion – Lücken, dünne Wände</summary><p><strong>Ursache:</strong> Zu wenig Material kommt aus der Düse: Düse teilweise verstopft, Temperatur zu niedrig, Filament verheddert.<br><strong>Lösung:</strong> Filamentrolle prüfen, Temperatur erhöhen, Lehrkraft informieren (Düse reinigen).</p></details>
+  <details><summary>🪜 Schichtversatz – Schichten verschoben</summary><p><strong>Ursache:</strong> Der Druckkopf ist irgendwo angestoßen oder ein Riemen ist locker.<br><strong>Lösung:</strong> Riemenspannung prüfen, Drucker nicht anstoßen, Geschwindigkeit reduzieren.</p></details>
+</section>
+
+<!-- 7 -->
+<section id="sicherheit">
+  <h2>7. Sicherheit im 3D-Labor</h2>
+  <div class="achtung"><strong>Achtung:</strong> Die Düse wird über 200 °C heiß, das Druckbett bis zu 100 °C. Verbrennungsgefahr!</div>
+  <ol>
+    <li>Den Drucker nur nach Einweisung und mit Erlaubnis der Lehrkraft bedienen.</li>
+    <li>Während des Drucks nicht in den Drucker greifen. Düse und Druckbett nie berühren.</li>
+    <li>Fertige Teile erst abnehmen, wenn das Druckbett abgekühlt ist.</li>
+    <li>Den Raum gut lüften. Laufende Drucker nicht unbeaufsichtigt lassen.</li>
+    <li>Lange Haare zusammenbinden, keine weiten Ärmel oder Schals in der Nähe beweglicher Teile.</li>
+    <li>Beim Entfernen von Stützstrukturen eine Schutzbrille tragen und vom Körper weg arbeiten.</li>
+    <li>Störungen sofort der Lehrkraft melden – nicht selbst an der Düse herumbasteln.</li>
+  </ol>
+</section>
+
+<!-- Quiz -->
+<section id="quiz">
+  <h2>🧠 Wissensquiz</h2>
+  <p>Beantworte alle Fragen und klicke dann auf „Auswerten“.</p>
+  <form id="quiz-form"></form>
+  <button type="button" id="quiz-auswerten">Auswerten</button>
+  <button type="button" class="zweit" id="quiz-reset">Neu starten</button>
+  <div id="quiz-ergebnis"></div>
+</section>
+
+</main>
+<footer>MINT-Labor · 3D-Labor · <a href="uebungen.html">Weiter zu den praktischen Übungen →</a></footer>
+
+<script>
+/* ---------- Druckeraufbau ---------- */
+const teile = {
+  filament: ["Filamentrolle", "Auf der Spule ist der Kunststoffdraht (Filament) aufgewickelt, meist 1,75 mm dick. Filament sollte trocken gelagert werden, da es Feuchtigkeit aus der Luft aufnimmt."],
+  extruder: ["Extruder", "Der Extruder ist ein Motor mit Zahnrad, der das Filament greift und mit genau dosierter Geschwindigkeit in das Hotend schiebt. Er bestimmt, wie viel Material gedruckt wird."],
+  hotend: ["Hotend mit Düse", "Im Hotend wird das Filament auf etwa 200 °C geschmolzen. Es tritt durch die Düse aus, die meist eine Öffnung von 0,4 mm hat. Achtung: sehr heiß!"],
+  bett: ["Druckbett", "Auf dem Druckbett entsteht das Bauteil. Es ist meist beheizt, damit die erste Schicht gut haftet. Das Bett muss genau eben zur Düse ausgerichtet sein (Leveln)."],
+  achsen: ["Achsen und Führungen", "Der Drucker bewegt sich in drei Richtungen: X (links/rechts), Y (vor/zurück) und Z (hoch/runter). Führungsschienen und Zahnriemen sorgen für präzise Bewegungen."],
+  motoren: ["Schrittmotoren", "Schrittmotoren drehen sich in winzigen, genau festgelegten Schritten. Dadurch kann der Drucker den Druckkopf auf Bruchteile eines Millimeters genau positionieren."],
+  steuerung: ["Steuerung und Display", "Die Steuerplatine liest den G-Code und steuert Motoren und Heizungen. Über das Display startet man Drucke, ändert Temperaturen oder bricht einen Druck ab."],
+  rahmen: ["Rahmen", "Der Rahmen hält alle Bauteile stabil zusammen. Je steifer der Rahmen, desto weniger wackelt der Drucker und desto genauer wird der Druck."],
+  bauteil: ["Das Bauteil", "Hier siehst du, wie das Bauteil Schicht für Schicht wächst. Jede Linie ist eine Schicht – typisch sind 0,1 bis 0,3 mm pro Schicht."]
+};
+document.querySelectorAll("svg .teil").forEach(g => {
+  g.addEventListener("click", () => {
+    document.querySelectorAll("svg .teil").forEach(x => x.classList.remove("aktiv"));
+    g.classList.add("aktiv");
+    const [titel, text] = teile[g.dataset.teil];
+    document.getElementById("teil-info").innerHTML = `<h3 style="margin-top:0">${titel}</h3><p>${text}</p>`;
+  });
+});
+
+/* ---------- Arbeitsablauf ---------- */
+const schritte = [
+  ["💡 Idee", "Was soll gedruckt werden? Welche Aufgabe hat das Bauteil? Fertige eine Skizze mit den wichtigsten Maßen an."],
+  ["🖥️ CAD-Modell", "Mit einem CAD-Programm (Computer Aided Design) wird das Bauteil am Computer konstruiert. Für den Einstieg eignet sich <strong>Tinkercad</strong> (kostenlos im Browser), für Fortgeschrittene z. B. <strong>Fusion</strong> oder <strong>Onshape</strong>."],
+  ["📦 STL-Datei", "Das Modell wird als <strong>STL-Datei</strong> exportiert. Darin ist die Oberfläche des Körpers als viele kleine Dreiecke gespeichert."],
+  ["🔪 Slicer", "Ein Slicer-Programm (z. B. <strong>Cura</strong>, <strong>PrusaSlicer</strong> oder <strong>Bambu Studio</strong>) zerschneidet das Modell in viele dünne Schichten (engl. <em>slice</em> = Scheibe). Hier stellt man Schichthöhe, Füllung und Stützen ein."],
+  ["📝 G-Code", "Der Slicer erzeugt <strong>G-Code</strong>: eine Liste von Befehlen wie <code>G1 X50 Y20 E2.5</code> („fahre zu X50/Y20 und schiebe dabei 2,5 mm Filament nach“). Diese Datei kommt per USB-Stick, SD-Karte oder WLAN zum Drucker."],
+  ["🖨️ Druck", "Der Drucker heizt auf und arbeitet den G-Code Zeile für Zeile ab. Die erste Schicht ist die wichtigste – beobachte sie genau!"],
+  ["✂️ Nachbearbeitung", "Bauteil nach dem Abkühlen abnehmen, Stützstrukturen entfernen, Kanten entgraten und das Ergebnis prüfen: Stimmen die Maße? Erfüllt das Teil seine Aufgabe?"]
+];
+const knoepfe = document.getElementById("schritt-knoepfe");
+const inhalt = document.getElementById("schritt-inhalt");
+schritte.forEach((s, i) => {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.textContent = (i + 1) + ". " + s[0].split(" ").slice(1).join(" ");
+  b.onclick = () => zeigeSchritt(i);
+  knoepfe.appendChild(b);
+});
+function zeigeSchritt(i) {
+  [...knoepfe.children].forEach((b, j) => b.classList.toggle("aktiv", i === j));
+  inhalt.innerHTML = `<h3 style="margin-top:0">Schritt ${i + 1}: ${schritte[i][0]}</h3><p>${schritte[i][1]}</p>` +
+    `<div style="margin-top:.8rem">${i > 0 ? `<button type="button" class="zweit" onclick="zeigeSchritt(${i - 1})">← zurück</button> ` : ""}${i < schritte.length - 1 ? `<button type="button" onclick="zeigeSchritt(${i + 1})">weiter →</button>` : ""}</div>`;
+}
+zeigeSchritt(0);
+
+/* ---------- Simulator ---------- */
+const fmt = (x, d) => x.toLocaleString("de-DE", { minimumFractionDigits: d, maximumFractionDigits: d });
+function simuliere() {
+  const a = +document.getElementById("kante").value;      // cm
+  const h = +document.getElementById("schicht").value;    // mm
+  const f = +document.getElementById("infill").value / 100;
+  document.getElementById("kante-out").textContent = fmt(a, 1);
+  document.getElementById("schicht-out").textContent = fmt(h, 2);
+  document.getElementById("infill-out").textContent = Math.round(f * 100);
+
+  const w = 0.12; // cm Wand-/Deckschichtdicke
+  const innen = Math.max(a - 2 * w, 0);
+  const vHuelle = a ** 3 - innen ** 3;
+  const vGesamt = vHuelle + innen ** 3 * f;            // cm³
+  const schichten = Math.round(a * 10 / h);
+  const masse = vGesamt * 1.24;
+  const fluss = 50 * 0.4 * h;                           // mm³/s
+  const sek = vGesamt * 1000 / fluss * 1.15;            // +15 % für Leerfahrten
+  const min = Math.round(sek / 60);
+  document.getElementById("w-schichten").textContent = schichten;
+  document.getElementById("w-volumen").textContent = fmt(vGesamt, 1) + " cm³";
+  document.getElementById("w-masse").textContent = fmt(masse, 1) + " g";
+  document.getElementById("w-zeit").textContent = min >= 60 ? Math.floor(min / 60) + " h " + (min % 60) + " min" : min + " min";
+  zeichne(a, f);
+}
+function zeichne(a, f) {
+  const c = document.getElementById("schnitt"), ctx = c.getContext("2d");
+  ctx.clearRect(0, 0, 320, 320);
+  const rand = 20, gr = 280, s = gr / (a * 10);     // px pro mm
+  ctx.fillStyle = "#ffffff"; ctx.fillRect(rand, rand, gr, gr);
+  // Infill-Gitter
+  if (f > 0) {
+    const abstand = Math.max(0.8 / f * s, 2);        // Gitterabstand in px
+    ctx.save();
+    ctx.beginPath(); ctx.rect(rand, rand, gr, gr); ctx.clip();
+    ctx.strokeStyle = "#81c784"; ctx.lineWidth = Math.max(0.4 * s, 1);
+    for (let d = -gr; d < 2 * gr; d += abstand) {
+      ctx.beginPath(); ctx.moveTo(rand + d, rand); ctx.lineTo(rand + d + gr, rand + gr); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(rand + d, rand + gr); ctx.lineTo(rand + d + gr, rand); ctx.stroke();
+    }
+    ctx.restore();
+  }
+  // Wände
+  const wPx = 1.2 * s;
+  ctx.strokeStyle = "#2e7d32"; ctx.lineWidth = wPx;
+  ctx.strokeRect(rand + wPx / 2, rand + wPx / 2, gr - wPx, gr - wPx);
+  ctx.fillStyle = "#1f4e79"; ctx.font = "13px system-ui"; ctx.textAlign = "center";
+  ctx.fillText("Schnitt von oben – Füllung " + Math.round(f * 100) + " %", 160, 14);
+}
+["kante", "schicht", "infill"].forEach(id => document.getElementById(id).addEventListener("input", simuliere));
+simuliere();
+
+/* ---------- Quiz ---------- */
+const fragen = [
+  ["Wie nennt man Fertigungsverfahren, bei denen Material Schicht für Schicht hinzugefügt wird?", ["subtraktiv", "additiv", "umformend", "trennend"], 1],
+  ["Wofür steht die Abkürzung FDM?", ["Fused Deposition Modeling", "Fast Digital Machining", "Flexible Data Model", "Fine Drill Method"], 0],
+  ["Welches Bauteil schmilzt das Filament?", ["Extruder", "Druckbett", "Hotend", "Schrittmotor"], 2],
+  ["In welchem Dateiformat wird ein 3D-Modell meist an den Slicer übergeben?", ["JPG", "STL", "PDF", "MP3"], 1],
+  ["Was macht ein Slicer?", ["Er schneidet das fertige Bauteil zurecht", "Er zerlegt das Modell in Schichten und erzeugt G-Code", "Er reinigt die Düse", "Er heizt das Druckbett"], 1],
+  ["Welche Füllung reicht für die meisten Bauteile aus?", ["0 %", "15–20 %", "80 %", "100 %"], 1],
+  ["Ab welchem Überhangwinkel braucht man ungefähr Stützstrukturen?", ["ab ca. 5°", "ab ca. 45°", "erst ab 90°", "nie"], 1],
+  ["Welches Material wird in der Schule am häufigsten verwendet?", ["ABS", "TPU", "PLA", "Metall"], 2],
+  ["Die Ecken deines Bauteils biegen sich nach oben. Wie heißt dieser Fehler?", ["Stringing", "Warping", "Schichtversatz", "Unterextrusion"], 1],
+  ["Wann darfst du ein fertiges Bauteil vom Druckbett nehmen?", ["sofort nach dem Druck", "wenn das Druckbett abgekühlt ist", "während der letzten Schicht", "jederzeit"], 1]
+];
+const form = document.getElementById("quiz-form");
+function baueQuiz() {
+  form.innerHTML = fragen.map((q, i) => `
+    <div class="quiz-frage" id="q${i}">
+      <p>${i + 1}. ${q[0]}</p>
+      ${q[1].map((a, j) => `<label><input type="radio" name="f${i}" value="${j}"> ${a}</label>`).join("")}
+      <div class="feedback" id="fb${i}"></div>
+    </div>`).join("");
+  document.getElementById("quiz-ergebnis").innerHTML = "";
+}
+document.getElementById("quiz-auswerten").onclick = () => {
+  let punkte = 0;
+  fragen.forEach((q, i) => {
+    const sel = form.querySelector(`input[name=f${i}]:checked`);
+    const fb = document.getElementById("fb" + i);
+    if (sel && +sel.value === q[2]) { punkte++; fb.textContent = "✔ Richtig"; fb.className = "feedback richtig"; }
+    else { fb.textContent = "✘ Richtig wäre: " + q[1][q[2]]; fb.className = "feedback falsch"; }
+  });
+  const note = punkte >= 9 ? "Hervorragend! 🏆" : punkte >= 7 ? "Gut gemacht! 👍" : punkte >= 5 ? "Ganz ordentlich – lies die Theorie noch einmal nach." : "Arbeite die Theorie noch einmal durch und versuche es erneut.";
+  document.getElementById("quiz-ergebnis").innerHTML = `<div class="ergebnis">Du hast <strong>${punkte} von ${fragen.length}</strong> Punkten. ${note}</div>`;
+};
+document.getElementById("quiz-reset").onclick = baueQuiz;
+baueQuiz();
+</script>
+</body>
+</html>

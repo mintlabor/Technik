@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Praktische Übungen – 3D-Labor</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .check label { display: block; font-weight: 400; padding: .25rem 0; }
+  .eingabe { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: .4rem 0; }
+  .zuordnung { display: grid; grid-template-columns: 1fr auto; gap: .6rem 1rem; align-items: center; }
+  @media (max-width: 600px) { .zuordnung { grid-template-columns: 1fr; } }
+  .zuordnung select { width: 100%; min-width: 180px; }
+  .protokoll input { width: 100%; }
+  .formel { font-family: Georgia, serif; font-size: 1.05rem; background: #fff; padding: .4rem .8rem; border-radius: 6px; display: inline-block; border: 1px solid var(--blau-hell); }
+</style>
+</head>
+<body>
+<header>
+  <h1>🛠️ Praktische Übungen</h1>
+  <p>Wende dein Wissen an – am Computer und am Drucker</p>
+</header>
+<nav class="top">
+  <ul>
+    <li><a href="index.html">← Übersicht</a></li>
+    <li><a href="#u1">Ü1</a></li>
+    <li><a href="#u2">Ü2</a></li>
+    <li><a href="#u3">Ü3</a></li>
+    <li><a href="#u4">Ü4</a></li>
+    <li><a href="#u5">Ü5</a></li>
+    <li><a href="#u6">Ü6</a></li>
+  </ul>
+</nav>
+<main>
+
+<!-- Ü1 -->
+<section id="u1">
+  <h2>Ü1 · Mein erstes Modell: Namensschild <span class="badge leicht">leicht</span> <span class="badge">ca. 45 min</span></h2>
+  <p><strong>Ziel:</strong> Du lernst die Grundfunktionen von Tinkercad kennen und erstellst ein druckbares Namensschild.</p>
+  <div class="aufgabe">
+    <h4>Anleitung</h4>
+    <ol>
+      <li>Öffne <a href="https://www.tinkercad.com" target="_blank" rel="noopener">tinkercad.com</a> und melde dich mit dem Klassencode deiner Lehrkraft an.</li>
+      <li>Erstelle ein neues 3D-Design.</li>
+      <li>Ziehe einen <strong>Quader</strong> auf die Arbeitsebene und stelle ihn auf <strong>60 × 20 × 3 mm</strong> ein (Länge × Breite × Höhe).</li>
+      <li>Ziehe die Form <strong>Text</strong> auf die Arbeitsebene und schreibe deinen Vornamen. Stelle die Höhe auf <strong>1,5 mm</strong>.</li>
+      <li>Hebe den Text um <strong>3 mm</strong> an, damit er genau auf der Platte liegt. Passe die Größe an, sodass er auf die Platte passt.</li>
+      <li>Ergänze ein <strong>Loch</strong> (Zylinder als „Bohrung“, Ø 4 mm) für einen Schlüsselring.</li>
+      <li>Markiere alles und klicke auf <strong>Gruppieren</strong>.</li>
+      <li>Exportiere das Modell als <strong>STL-Datei</strong> und benenne sie: <code>Klasse_Name_Namensschild.stl</code>.</li>
+    </ol>
+  </div>
+  <div class="aufgabe check">
+    <h4>✅ Checkliste vor der Abgabe</h4>
+    <label><input type="checkbox"> Die Platte ist 60 × 20 × 3 mm groß.</label>
+    <label><input type="checkbox"> Der Text liegt auf der Platte und ragt nicht über den Rand.</label>
+    <label><input type="checkbox"> Das Loch hat mindestens 3 mm Abstand zum Rand.</label>
+    <label><input type="checkbox"> Alle Teile sind gruppiert.</label>
+    <label><input type="checkbox"> Die STL-Datei ist richtig benannt.</label>
+  </div>
+  <details><summary>💡 Tipp für Schnelle</summary><p>Gestalte die Kanten der Platte abgerundet (Form „Abgerundeter Quader“) oder füge ein kleines Symbol hinzu, z. B. ein Zahnrad oder einen Stern.</p></details>
+</section>
+
+<!-- Ü2 -->
+<section id="u2">
+  <h2>Ü2 · Schichten berechnen <span class="badge leicht">leicht</span> <span class="badge">ca. 20 min</span></h2>
+  <p>Ein 3D-Drucker baut ein Bauteil aus vielen Schichten auf. So berechnest du die Anzahl:</p>
+  <p class="formel">Anzahl Schichten = Höhe des Bauteils ÷ Schichthöhe</p>
+  <div class="merke"><strong>Achtung, Einheiten!</strong>Rechne beide Werte zuerst in Millimeter um.</div>
+
+  <div class="aufgabe">
+    <h4>a) Ein Namensschild ist 4,5 mm hoch. Schichthöhe: 0,15 mm. Wie viele Schichten?</h4>
+    <div class="eingabe"><input type="number" step="any" id="a2a"> Schichten <button type="button" onclick="pruefe('a2a',30,0)">Prüfen</button></div>
+    <div class="feedback" id="a2a-fb"></div>
+  </div>
+  <div class="aufgabe">
+    <h4>b) Eine Vase ist 12 cm hoch. Schichthöhe: 0,2 mm. Wie viele Schichten?</h4>
+    <div class="eingabe"><input type="number" step="any" id="a2b"> Schichten <button type="button" onclick="pruefe('a2b',600,0)">Prüfen</button></div>
+    <div class="feedback" id="a2b-fb"></div>
+  </div>
+  <div class="aufgabe">
+    <h4>c) Ein Bauteil besteht aus 45 Schichten zu je 0,3 mm. Wie hoch ist es?</h4>
+    <div class="eingabe"><input type="number" step="any" id="a2c"> mm <button type="button" onclick="pruefe('a2c',13.5,0.01)">Prüfen</button></div>
+    <div class="feedback" id="a2c-fb"></div>
+  </div>
+  <div class="aufgabe">
+    <h4>d) Für die Vase aus b) braucht eine Schicht im Schnitt 40 Sekunden. Wie lange dauert der Druck in Stunden?</h4>
+    <div class="eingabe"><input type="number" step="any" id="a2d"> h <button type="button" onclick="pruefe('a2d',6.67,0.05)">Prüfen</button></div>
+    <div class="feedback" id="a2d-fb"></div>
+  </div>
+  <details><summary>🧠 Denkaufgabe</summary><p>Du änderst die Schichthöhe der Vase von 0,2 mm auf 0,1 mm. Wie verändert sich die Druckzeit ungefähr? Begründe deine Antwort mit dem Begriff <em>antiproportional</em>.</p></details>
+</section>
+
+<!-- Ü3 -->
+<section id="u3">
+  <h2>Ü3 · Material und Kosten <span class="badge mittel">mittel</span> <span class="badge">ca. 30 min</span></h2>
+  <p>Bevor gedruckt wird, möchten wir wissen, wie viel Material ein Bauteil braucht und was es kostet.</p>
+  <p class="formel">Masse m = Volumen V · Dichte ρ</p>
+  <p>Dichte von PLA: <strong>ρ = 1,24 g/cm³</strong> · Ein Meter Filament (Ø 1,75 mm) wiegt etwa <strong>3 g</strong>.</p>
+
+  <div class="aufgabe">
+    <h4>a) Der Slicer zeigt für ein Bauteil ein Materialvolumen von 25 cm³. Berechne die Masse in Gramm.</h4>
+    <div class="eingabe"><input type="number" step="any" id="a3a"> g <button type="button" onclick="pruefe('a3a',31,0.5)">Prüfen</button></div>
+    <div class="feedback" id="a3a-fb"></div>
+  </div>
+  <div class="aufgabe">
+    <h4>b) Eine 1-kg-Rolle PLA kostet 22 €. Was kostet das Material für das Bauteil aus a)? (Ergebnis in €, auf Cent gerundet)</h4>
+    <div class="eingabe"><input type="number" step="any" id="a3b"> € <button type="button" onclick="pruefe('a3b',0.68,0.011)">Prüfen</button></div>
+    <div class="feedback" id="a3b-fb"></div>
+  </div>
+  <div class="aufgabe">
+    <h4>c) Wie viele Meter Filament werden ungefähr verbraucht?</h4>
+    <div class="eingabe"><input type="number" step="any" id="a3c"> m <button type="button" onclick="pruefe('a3c',10.4,0.4)">Prüfen</button></div>
+    <div class="feedback" id="a3c-fb"></div>
+  </div>
+  <details><summary>🏅 Profi-Aufgabe: Warum wiegt ein Meter Filament etwa 3 g?</summary>
+    <p>Das Filament ist ein langer Zylinder mit dem Durchmesser d = 1,75 mm. Berechne das Volumen von 1 m Filament mit <span class="formel">V = π · r² · h</span> in cm³ und anschließend die Masse. Tipp: r = 0,0875 cm, h = 100 cm.</p>
+    <div class="eingabe"><input type="number" step="any" id="a3d"> g <button type="button" onclick="pruefe('a3d',2.98,0.05)">Prüfen</button></div>
+    <div class="feedback" id="a3d-fb"></div>
+  </details>
+
+  <h3>🧮 Kostenrechner</h3>
+  <p>Nutze den Rechner, um deine eigenen Projekte zu kalkulieren.</p>
+  <div class="eingabe"><label for="r-vol">Volumen (cm³)</label> <input type="number" id="r-vol" value="25" step="any"></div>
+  <div class="eingabe"><label for="r-mat">Material</label>
+    <select id="r-mat" style="width:auto">
+      <option value="1.24">PLA (1,24 g/cm³)</option>
+      <option value="1.27">PETG (1,27 g/cm³)</option>
+      <option value="1.21">TPU (1,21 g/cm³)</option>
+      <option value="1.04">ABS (1,04 g/cm³)</option>
+    </select></div>
+  <div class="eingabe"><label for="r-preis">Preis pro kg (€)</label> <input type="number" id="r-preis" value="22" step="any"></div>
+  <div class="ergebnis" id="r-erg"></div>
+</section>
+
+<!-- Ü4 -->
+<section id="u4">
+  <h2>Ü4 · Toleranztest <span class="badge mittel">mittel</span> <span class="badge">ca. 45 min + Druckzeit</span></h2>
+  <p><strong>Problem:</strong> Ein Bolzen mit 10 mm Durchmesser passt oft <em>nicht</em> in ein gedrucktes 10-mm-Loch. Warum? Der Kunststoff dehnt sich beim Drucken leicht aus, und Löcher werden etwas kleiner. Man braucht ein <strong>Spiel</strong> (eine Toleranz).</p>
+  <div class="aufgabe">
+    <h4>Durchführung</h4>
+    <ol>
+      <li>Konstruiere in Tinkercad eine Platte 70 × 20 × 5 mm mit vier Löchern: Ø 10,0 mm · 10,2 mm · 10,4 mm · 10,6 mm (Abstand je 15 mm).</li>
+      <li>Konstruiere einen Bolzen: Zylinder Ø 10,0 mm, Höhe 15 mm.</li>
+      <li>Drucke beide Teile mit 0,2 mm Schichthöhe und 20 % Füllung.</li>
+      <li>Miss alle Löcher und den Bolzen mit dem Messschieber und teste, in welches Loch der Bolzen passt.</li>
+    </ol>
+  </div>
+  <h3>📋 Messprotokoll</h3>
+  <div class="tabelle-scroll">
+  <table class="protokoll">
+    <tr><th>Soll-Maß</th><th>Ist-Maß (gemessen)</th><th>Abweichung</th><th>Passung</th></tr>
+    <tr><td>Bolzen 10,0 mm</td><td><input type="number" step="0.01" class="ist" data-soll="10"></td><td class="abw">–</td><td>–</td></tr>
+    <tr><td>Loch 10,0 mm</td><td><input type="number" step="0.01" class="ist" data-soll="10"></td><td class="abw">–</td><td><select><option>–</option><option>passt nicht</option><option>stramm</option><option>gut</option><option>wackelt</option></select></td></tr>
+    <tr><td>Loch 10,2 mm</td><td><input type="number" step="0.01" class="ist" data-soll="10.2"></td><td class="abw">–</td><td><select><option>–</option><option>passt nicht</option><option>stramm</option><option>gut</option><option>wackelt</option></select></td></tr>
+    <tr><td>Loch 10,4 mm</td><td><input type="number" step="0.01" class="ist" data-soll="10.4"></td><td class="abw">–</td><td><select><option>–</option><option>passt nicht</option><option>stramm</option><option>gut</option><option>wackelt</option></select></td></tr>
+    <tr><td>Loch 10,6 mm</td><td><input type="number" step="0.01" class="ist" data-soll="10.6"></td><td class="abw">–</td><td><select><option>–</option><option>passt nicht</option><option>stramm</option><option>gut</option><option>wackelt</option></select></td></tr>
+  </table>
+  </div>
+  <div class="aufgabe">
+    <h4>Auswertung</h4>
+    <ol>
+      <li>Welches Spiel (Differenz zwischen Loch und Bolzen) ist für unseren Drucker ideal?</li>
+      <li>Sind die Löcher größer oder kleiner als geplant? Erkläre die Ursache.</li>
+      <li>Formuliere eine Regel für zukünftige Konstruktionen: „Wenn zwei Teile ineinander passen sollen, …“</li>
+    </ol>
+  </div>
+</section>
+
+<!-- Ü5 -->
+<section id="u5">
+  <h2>Ü5 · Fehlerdetektiv <span class="badge mittel">mittel</span> <span class="badge">ca. 15 min</span></h2>
+  <p>Ordne jeder Beobachtung den passenden Druckfehler zu. Hilfe findest du in der <a href="theorie.html#fehler">Theorie</a>.</p>
+  <div class="zuordnung" id="detektiv"></div>
+  <p><button type="button" onclick="pruefeDetektiv()">Prüfen</button></p>
+  <div class="feedback" id="detektiv-fb"></div>
+</section>
+
+<!-- Ü6 -->
+<section id="u6">
+  <h2>Ü6 · Projekt: Handyhalter <span class="badge schwer">anspruchsvoll</span> <span class="badge">ca. 3–4 Doppelstunden</span></h2>
+  <p><strong>Auftrag:</strong> Konstruiere einen Handyhalter für den Schreibtisch, mit dem man ein Smartphone im Hoch- und Querformat abstellen kann.</p>
+  <div class="aufgabe">
+    <h4>📐 Anforderungsliste</h4>
+    <ul>
+      <li>Das Handy steht in einem Winkel von 60–70° stabil und kippt nicht.</li>
+      <li>Ein Ladekabel kann angeschlossen werden (Aussparung unten).</li>
+      <li>Grundfläche maximal 100 × 100 mm, Höhe maximal 120 mm.</li>
+      <li>Materialverbrauch höchstens 50 g PLA.</li>
+      <li>Druckbar möglichst ohne Stützstrukturen.</li>
+    </ul>
+  </div>
+  <div class="aufgabe">
+    <h4>🗂️ Arbeitsschritte</h4>
+    <ol>
+      <li><strong>Planen:</strong> Handy ausmessen (Breite, Dicke). Zwei verschiedene Ideen skizzieren und die bessere auswählen.</li>
+      <li><strong>Konstruieren:</strong> Modell in Tinkercad erstellen. Dabei an die Toleranz aus Ü4 denken.</li>
+      <li><strong>Slicen:</strong> Materialverbrauch und Druckzeit im Slicer ablesen und die Kosten berechnen (Ü3).</li>
+      <li><strong>Drucken:</strong> Nach Freigabe durch die Lehrkraft drucken.</li>
+      <li><strong>Testen und Verbessern:</strong> Erfüllt der Halter alle Anforderungen? Was würdest du in Version 2 ändern?</li>
+      <li><strong>Präsentieren:</strong> Stelle dein Ergebnis in 2 Minuten vor.</li>
+    </ol>
+  </div>
+  <h3>📊 Bewertungsbogen</h3>
+  <div class="tabelle-scroll">
+  <table>
+    <tr><th>Kriterium</th><th>Punkte</th></tr>
+    <tr><td>Skizzen und Planung (zwei Ideen, Maße eingetragen)</td><td>/ 4</td></tr>
+    <tr><td>Konstruktion (sauber, maßhaltig, durchdacht)</td><td>/ 6</td></tr>
+    <tr><td>Anforderungen erfüllt (Stabilität, Kabel, Maße, Material)</td><td>/ 6</td></tr>
+    <tr><td>Kostenberechnung</td><td>/ 2</td></tr>
+    <tr><td>Reflexion und Verbesserungsvorschläge</td><td>/ 4</td></tr>
+    <tr><td>Präsentation</td><td>/ 3</td></tr>
+    <tr><th>Gesamt</th><th>/ 25</th></tr>
+  </table>
+  </div>
+</section>
+
+</main>
+<footer>MINT-Labor · 3D-Labor · <a href="theorie.html">← zurück zur Theorie</a></footer>
+
+<script>
+const zahl = v => parseFloat(String(v).replace(",", "."));
+function pruefe(id, loesung, toleranz) {
+  const wert = zahl(document.getElementById(id).value);
+  const fb = document.getElementById(id + "-fb");
+  if (isNaN(wert)) { fb.textContent = "Bitte gib eine Zahl ein."; fb.className = "feedback falsch"; return; }
+  if (Math.abs(wert - loesung) <= toleranz + 1e-9) { fb.textContent = "✔ Richtig!"; fb.className = "feedback richtig"; }
+  else { fb.textContent = "✘ Noch nicht richtig. Prüfe deine Rechnung und die Einheiten."; fb.className = "feedback falsch"; }
+}
+
+/* Kostenrechner */
+function rechne() {
+  const v = zahl(document.getElementById("r-vol").value) || 0;
+  const rho = +document.getElementById("r-mat").value;
+  const preis = zahl(document.getElementById("r-preis").value) || 0;
+  const m = v * rho;
+  const laenge = m / (Math.PI * 0.0875 ** 2 * 100 * rho);
+  const kosten = m / 1000 * preis;
+  const f = (x, d) => x.toLocaleString("de-DE", { minimumFractionDigits: d, maximumFractionDigits: d });
+  document.getElementById("r-erg").innerHTML = `Masse: <strong>${f(m, 1)} g</strong> · Filament: <strong>${f(laenge, 1)} m</strong> · Kosten: <strong>${f(kosten, 2)} €</strong>`;
+}
+["r-vol", "r-mat", "r-preis"].forEach(id => document.getElementById(id).addEventListener("input", rechne));
+rechne();
+
+/* Messprotokoll */
+document.querySelectorAll(".ist").forEach(inp => inp.addEventListener("input", () => {
+  const ist = zahl(inp.value), soll = +inp.dataset.soll;
+  const zelle = inp.closest("tr").querySelector(".abw");
+  zelle.textContent = isNaN(ist) ? "–" : ((ist - soll >= 0 ? "+" : "") + (ist - soll).toFixed(2).replace(".", ",") + " mm");
+}));
+
+/* Fehlerdetektiv */
+const fehler = ["Warping", "Stringing", "Spaghetti", "Unterextrusion", "Schichtversatz", "Keine Haftung"];
+const faelle = [
+  ["Zwischen zwei Türmen hängen viele hauchdünne Fäden wie Spinnweben.", "Stringing"],
+  ["Ab der Hälfte des Drucks sind alle Schichten ein Stück nach rechts verschoben.", "Schichtversatz"],
+  ["Die Ecken einer großen, flachen Platte haben sich nach oben gebogen.", "Warping"],
+  ["Statt eines Bauteils liegt ein wirres Knäuel aus Kunststofffäden auf dem Bett.", "Spaghetti"],
+  ["Die Wände sind löchrig und dünn, an manchen Stellen fehlen Linien.", "Unterextrusion"],
+  ["Schon die erste Schicht wird von der Düse mitgeschleift und rollt sich auf.", "Keine Haftung"]
+];
+const det = document.getElementById("detektiv");
+faelle.forEach((f, i) => {
+  det.insertAdjacentHTML("beforeend", `<div>${i + 1}. ${f[0]}</div>
+    <select id="d${i}"><option value="">– bitte wählen –</option>${fehler.map(x => `<option>${x}</option>`).join("")}</select>`);
+});
+function pruefeDetektiv() {
+  let r = 0;
+  faelle.forEach((f, i) => {
+    const s = document.getElementById("d" + i);
+    const ok = s.value === f[1];
+    s.style.borderColor = ok ? "var(--gruen)" : "var(--rot)";
+    if (ok) r++;
+  });
+  const fb = document.getElementById("detektiv-fb");
+  fb.textContent = `${r} von ${faelle.length} richtig zugeordnet.` + (r === faelle.length ? " 🕵️ Super, Detektiv!" : " Rot markierte Antworten noch einmal prüfen.");
+  fb.className = "feedback " + (r === faelle.length ? "richtig" : "falsch");
+}
+</script>
+</body>
+</html>
